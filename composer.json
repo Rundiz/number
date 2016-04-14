@@ -1,7 +1,7 @@
 {
 	"name": "rundiz/number",
 	"type": "library",
-	"description": "number conversion (number to text) (Thai and English)",
+	"description": "Number conversion (number to text) (Thai and English)",
 	"keywords": ["number", "num to text", "number to text", "number conversion", "convert number", "number convert"],
 	"license": "MIT",
 	"authors": [
