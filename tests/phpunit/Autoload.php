@@ -7,7 +7,7 @@
  */
 
 
-namespace Rundiz\SimpleCache\Tests;
+namespace Rundiz\Number\Tests;
 
 /**
  * Copy from PSR-4
