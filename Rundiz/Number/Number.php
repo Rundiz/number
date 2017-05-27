@@ -136,7 +136,7 @@ class Number
             $byte_units = array_reverse($this->byte_units);
             foreach ($byte_units as $size_unit => $size_unit_conversion) {
                 $size_unit_conversion = (string) $size_unit_conversion;
-                if (floatval($size) >= floatval($size_unit_conversion) && $unit == 'AUTO') {
+                if ($size >= $size_unit_conversion && $unit == 'AUTO') {
                     $output = bcdiv($size, $size_unit_conversion, $decimal).' '.$size_unit;
                     break;
                 }
@@ -166,7 +166,7 @@ class Number
 
         $size_number = 0;
         if (isset($matches[1])) {
-            $size_number = floatval($matches[1]);
+            $size_number = $matches[1];
         } else {
             return false;
         }

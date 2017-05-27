@@ -27,7 +27,18 @@ class NumberTest extends \PHPUnit\Framework\TestCase
     {
         $Number = new \Rundiz\Number\Number();
         $this->assertEquals('100.00 GB', $Number->fromBytes(100000000000));
+        $this->assertEquals('123.45 GB', $Number->fromBytes(123456789123));
+        $this->assertEquals('123.45 B', $Number->fromBytes(123.456789123));
+        $this->assertFalse($Number->fromBytes(-123.456789123));
+
         $this->assertEquals('8020000000000', $Number->toBytes('8.02TB'));
+        $this->assertEquals('123456789000', $Number->toBytes('123.456789GB'));
+        $this->assertEquals('98765', $Number->toBytes('98.765KB'));
+        $this->assertEquals('98765.43', $Number->toBytes('98.76543KB'));
+        $this->assertEquals('101135.80032', $Number->toBytes('98.76543KiB'));
+        $this->assertEquals('132560717806.04314', $Number->toBytes('123.456789GiB'));
+        $this->assertFalse($Number->toBytes('98.76543 KiB'));
+        $this->assertFalse($Number->toBytes('-123.456789GiB'));
     }// testConvertByte
 
 
