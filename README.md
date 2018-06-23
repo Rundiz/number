@@ -60,6 +60,20 @@ echo $number->fromBytes('133300'); // 133.30 KB
 echo $number->fromBytes('10000', 'KiB); // 9.76 KiB
 ```
 
+### Remove dot zero digits:
+
+```php
+require 'Rundiz/Number/Number.php';
+
+$Number = new Rundiz\Number\Number();
+
+echo $Number->removeDotZero('1987.0000000000'); // 1987
+echo $Number->removeDotZero('35.400'); // 35.400
+echo $Number->removeDotZero('35.400', false); // 35.4
+echo $Number->removeDotZero('35,400', false, ','); // 35,4 (european number format)
+```
+
+
 ---
 
 For more example, please look inside **tests** folder.

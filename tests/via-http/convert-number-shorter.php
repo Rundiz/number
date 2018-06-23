@@ -54,6 +54,7 @@ class Shorter
 }
 
 
+echo '<meta charset="utf-8">' . PHP_EOL;
 // use namespace for test namespace in \Rundiz\Number\Number();
 $test = new \Test\Shorter\Shorter();
 $test->run();

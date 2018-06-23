@@ -1,19 +1,19 @@
 <?php
-/** 
+/**
  * Number class.
- * 
+ *
  * @package Number
- * @version 1.1.4
+ * @version 1.1.5
  * @author Vee W.
  * @license http://opensource.org/licenses/MIT
- * 
+ *
  */
 
 namespace Rundiz\Number;
 
 /**
  * number class for convert number, convert file size from bytes to other or from other to bytes.
- * 
+ *
  * @since 1.1
  */
 class Number
@@ -22,9 +22,9 @@ class Number
 
     /**
      * byte units.
-     * 
+     *
      * @var array match the byte units (B, KB, KiB, ...) to conversion number.
-     * @link https://en.wikipedia.org/wiki/File_size reference for conversion number. 
+     * @link https://en.wikipedia.org/wiki/File_size reference for conversion number.
      */
     protected $byte_units = array(
         'B' => 1,
@@ -50,7 +50,7 @@ class Number
     /**
      * A shorter way to convert Baht to different languages in one class. You no need to initialize `new Number[Language]()` class just `new Number()`.<br>
      * You may need to require/include the Number[Language].php file if you don't use composer.
-     * 
+     *
      * @param number $num number integer or decimal. negative or positive.
      * @param boolean $display_net display net (ถ้วน). true to display, false to not display. Usually this is only works with Thai language.
      * @param string $language the language you want to use. accepted Thai, Eng. this will be use in new Number[Language] object automatically.
@@ -82,7 +82,7 @@ class Number
     /**
      * A shorter way to convert number to different languages in one class. You no need to initialize `new Number[Language]()` class just `new Number()`.<br>
      * You may need to require/include the Number[Language].php file if you don't use composer.
-     * 
+     *
      * @param number $num number integer or decimal. negative or positive.
      * @param string $language the language you want to use. accepted Thai, Eng. this will be use in new Number[Language] object automatically.
      */
@@ -103,7 +103,7 @@ class Number
 
     /**
      * convert file size from bytes to the unit you specified or automatically detect.
-     * 
+     *
      * @param integer $size file size in bytes only.
      * @param string $unit unit you want to convert. accepted values are AUTO, B, KB, KiB, ... more please refer to byte_units property.
      * @param integer $decimal number of decimal.
@@ -149,8 +149,38 @@ class Number
 
 
     /**
+     * Remove dot zero digits.
+     *
+     * @since 1.1.5
+     * @param string|float|double $number The original number.
+     * @param boolean $all_zero If you just want to remove all dot zero (example: 12.0000 = 12) then set this to true. If you want to remove any trailing dot zero (example: 12.1250 = 12.125) then set this to false.
+     * @param string $decimal_point Decimal point. You can change this for example: european use , as decimal point.
+     * @return string Return number that is removed dot zero digits.
+     */
+    function removeDotZero($number, $all_zero = true, $decimal_point = '.')
+    {
+        if (strpos($number, $decimal_point) !== false) {
+            if ($all_zero === true) {
+                $numberExplode = explode($decimal_point, $number);
+                if (is_array($numberExplode) && array_key_exists(1, $numberExplode) && array_key_exists(0, $numberExplode)) {
+                    if (floatval($numberExplode[1]) == floatval(0) && ctype_digit($numberExplode[1])) {
+                        $number = $numberExplode[0];
+                    }
+                }
+                unset($numberExplode);
+            } else {
+                $number = rtrim($number, '0');
+                $number = rtrim($number, $decimal_point);
+            }
+        }
+
+        return (string) $number;
+    }// removeDotZero
+
+
+    /**
      * convert file size to bytes.
-     * 
+     *
      * @param string $size enter file size string such as 105 or 105B for 105 Bytes, 1KB for 1 Kilobyte, 1KiB for 1 Kibibyte. file size unit can be *B or *iB for binary and decimal.
      * @return mixed return false if failed to convert. return number if it is able to convert.
      */
