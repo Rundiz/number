@@ -73,7 +73,7 @@ class NumberThai
             $num = ltrim($num, '+');
         }
 
-        if ($num{0} == '0') {
+        if ($num == '0') {
             $output .= 'ศูนย์';
         } else {
             $output .= $this->convertNumberWithScale($num);
@@ -83,16 +83,19 @@ class NumberThai
         if ($dec > 0) {
             // if there is decimal (.)
             $dec_str = '';
-            
+
+            if (strlen($dec) == 1) {
+                $dec .= '0';
+            }
             // convert number normally for decimal.
             $dec_str = $this->convertNumberWithScale($dec);
-            
+
             if ($dec_str != null) {
                 $output .= $dec_str . 'สตางค์';
             }
         }
         
-        if (!isset($dec_str) || (isset($dec_str) && $dec_str == null) && $display_net === true) {
+        if ($display_net === true && (!isset($dec_str) || (isset($dec_str) && $dec_str == null))) {
             $output .= 'ถ้วน';
         }
         
@@ -143,7 +146,7 @@ class NumberThai
             $num = ltrim($num, '+');
         }
 
-        if ($num{0} == '0') {
+        if ($num == '0') {
             $output .= 'ศูนย์';
         } else {
             $output .= $this->convertNumberWithScale($num);
@@ -170,11 +173,12 @@ class NumberThai
     /**
      * convert the number to text with scale. (ten, hundred, thousand, ...) in Thai language.
      * 
-     * @param number $digits number only. no negative or positive sign. no dot.
+     * @param string $digits number only. no negative or positive sign. no dot.
      * @return string
      */
     private function convertNumberWithScale($digits)
     {
+        $digits = ltrim($digits, '0');// remove zero leading. example: 0212, 00213
         $length_digit = strlen($digits);
         $count = 1;
         $pos = 0;// หลักเลข 1=หน่วย, 2=สิบ, 3=ร้อย, ...

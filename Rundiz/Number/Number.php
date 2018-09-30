@@ -3,7 +3,7 @@
  * Number class.
  *
  * @package Number
- * @version 1.1.5
+ * @version 1.1.6
  * @author Vee W.
  * @license http://opensource.org/licenses/MIT
  *
@@ -193,6 +193,11 @@ class Number
             return false;
         }
         unset($pattern);
+
+        if (!isset($matches[2]) && isset($matches[1]) && strpos($matches[1], '.') !== false) {
+            // if no size unit and the number is float, double, contain dot. cannot convert.
+            return false;
+        }
 
         $size_number = 0;
         if (isset($matches[1])) {

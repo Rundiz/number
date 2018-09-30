@@ -99,7 +99,7 @@ class NumberEng
             $num = ltrim($num, '+');
         }
 
-        if ($num{0} == '0') {
+        if ($num == '0') {
             $output .= 'zero';
         } else {
             if (strlen($num) > 36) {

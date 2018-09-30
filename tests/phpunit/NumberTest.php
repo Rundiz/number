@@ -7,37 +7,36 @@ class NumberTest extends \PHPUnit\Framework\TestCase
 {
 
 
-    public function testConvertBaht()
-    {
-        $Number = new \Rundiz\Number\Number();
-        $this->assertEquals('negative forty-three million, two hundred and thirteen thousand, eight hundred and ninety-five Baht', $Number->convertBaht(-43213895, true, 'Eng'));
-        $this->assertEquals('ลบสี่สิบสามล้านสองแสนหนึ่งหมื่นสามพันแปดร้อยเก้าสิบห้าบาทถ้วน', $Number->convertBaht(-43213895, true, 'Thai'));
-    }// testConvertBaht
-
-
-    public function testConvertNumber()
-    {
-        $Number = new \Rundiz\Number\Number();
-        $this->assertEquals('three hundred and twenty-four point five', $Number->convertNumber(324.50, 'Eng'));
-        $this->assertEquals('สามร้อยยี่สิบสี่จุดห้า', $Number->convertNumber(324.50, 'Thai'));
-    }// testConvertNumber
-
-
     public function testConvertByte()
     {
         $Number = new \Rundiz\Number\Number();
-        $this->assertEquals('100.00 GB', $Number->fromBytes(100000000000));
+        $this->assertEquals('10000.00 B', $Number->fromBytes(10000, 'INVALIDUNIT'));
+        $this->assertEquals('20.00 TB', $Number->fromBytes(20000000000001));
         $this->assertEquals('123.45 GB', $Number->fromBytes(123456789123));
+        $this->assertEquals('100.00 GB', $Number->fromBytes(100000000000));
+        $this->assertEquals('10.00 MB', $Number->fromBytes(10000000));
+        $this->assertEquals('100.00 KB', $Number->fromBytes(100000));
         $this->assertEquals('123.45 B', $Number->fromBytes(123.456789123));
         $this->assertFalse($Number->fromBytes(-123.456789123));
 
+        $this->assertEquals('8796093022208', $Number->toBytes('8TiB'));
+        $this->assertEquals('8796093022208', $Number->toBytes('8.000TiB'));
         $this->assertEquals('8020000000000', $Number->toBytes('8.02TB'));
+        $this->assertEquals('1342177280', $Number->toBytes('1.25GiB'));
+        $this->assertEquals('132560717806.04314', $Number->toBytes('123.456789GiB'));
         $this->assertEquals('123456789000', $Number->toBytes('123.456789GB'));
+        $this->assertEquals('10171187.2', $Number->toBytes('9.7MiB'));
+        $this->assertEquals('9700000', $Number->toBytes('9.7MB'));
+        $this->assertEquals('1331.2', $Number->toBytes('1.3KiB'));
+        $this->assertEquals('1331.2', $Number->toBytes('1.30KiB'));
         $this->assertEquals('98765', $Number->toBytes('98.765KB'));
         $this->assertEquals('98765.43', $Number->toBytes('98.76543KB'));
-        $this->assertEquals('101135.80032', $Number->toBytes('98.76543KiB'));
-        $this->assertEquals('132560717806.04314', $Number->toBytes('123.456789GiB'));
-        $this->assertFalse($Number->toBytes('98.76543 KiB'));
+        $this->assertEquals('6960', $Number->toBytes('6960B'));
+        $this->assertEquals('1245', $Number->toBytes('1245'));
+        $this->assertEquals('2594', $Number->toBytes(2594));
+        $this->assertFalse($Number->toBytes(45.60));
+        $this->assertEquals('101135.80032', $Number->toBytes('98.76543KiB'));// not contain space.
+        $this->assertFalse($Number->toBytes('98.76543 KiB'));// contain space.
         $this->assertFalse($Number->toBytes('-123.456789GiB'));
     }// testConvertByte
 
