@@ -65,10 +65,10 @@ class NumberThai
 
         $output = '';
 
-        if ($num{0} == '-') {
+        if ($num[0] == '-') {
             $output .= 'ลบ';
             $num = ltrim($num, '-');
-        } elseif ($num{0} == '+') {
+        } elseif ($num[0] == '+') {
             $output .= 'บวก';
             $num = ltrim($num, '+');
         }
@@ -138,10 +138,10 @@ class NumberThai
 
         $output = '';
 
-        if ($num{0} == '-') {
+        if ($num[0] == '-') {
             $output .= 'ลบ';
             $num = ltrim($num, '-');
-        } elseif ($num{0} == '+') {
+        } elseif ($num[0] == '+') {
             $output .= 'บวก';
             $num = ltrim($num, '+');
         }
@@ -155,10 +155,10 @@ class NumberThai
         if ($dec > 0) {
             // if there is decimal (.)
             $output .= 'จุด';
-            if ($dec{0} == '0') {
+            if ($dec[0] == '0') {
                 // first digit after dot is zero. read number directly
                 for ($i = 0; $i < strlen($dec); $i++) {
-                    $output .= $this->convertDirectNum($dec{$i});
+                    $output .= $this->convertDirectNum($dec[$i]);
                 }
             } else {
                 // read number normally.
@@ -191,18 +191,18 @@ class NumberThai
                 $pos = 1;
             }
 
-            $tmp_output = $this->convertDirectNum($digits{$i});
+            $tmp_output = $this->convertDirectNum($digits[$i]);
 
-            if ($pos >= 0 && $digits{$i} == 0 && $length_digit > $count) {
+            if ($pos >= 0 && $digits[$i] == 0 && $length_digit > $count) {
                 // หากหลักมากกว่าหน่วย และตัวเลขที่เจอเป็นศูนย์ ไม่ให้แสดงตัวอักษรคำว่าศูนย์ เพราะไม่อ่านสิบศูนย์ หรือ ร้อยศูนย์ศูนย์
                 $tmp_output = '';
-            } elseif ($pos == 1 && $digits{$i} == 1) {
+            } elseif ($pos == 1 && $digits[$i] == 1) {
                 // หากเป็นหลักสิบ และตัวเลขที่เจอเป็น 1 ไม่ให้แสดงตัวอักษร คำว่า หนึ่ง เนื่องจากเราจะไม่อ่านว่า หนึ่งสิบ
                 $tmp_output = '';
-            } elseif ($pos == 1 && $digits{$i} == 2) {
+            } elseif ($pos == 1 && $digits[$i] == 2) {
                 // หน่วยสิบ เลขคือ 2
                 $tmp_output = 'ยี่';
-            } elseif (($pos == 0 || $pos == 6) && $digits{$i} == 1 && $length_digit > $count) {
+            } elseif (($pos == 0 || $pos == 6) && $digits[$i] == 1 && $length_digit > $count) {
                 // หากเป็นหลักหน่วย หรือหลักล้าน และตัวเลขที่พบคือ 1 และยังมีหลักที่มากกว่าหลักหน่วยปัจจุบัน ให้แสดงเป็น เอ็ด แทน หนึ่ง
                 $tmp_output = 'เอ็ด';
             }
@@ -211,7 +211,7 @@ class NumberThai
                 // generate number scale (สิบ ร้อย พัน ...)
                 $tmp_output_scale = $this->number_scale[$pos];
             }
-            if ($digits{$i} == 0 && $pos != 6) {
+            if ($digits[$i] == 0 && $pos != 6) {
                 // ถ้าตัวเลขที่พบเป็น 0 และไม่ใช่หลักล้าน ไม่ให้แสดงอักษรของหลัก
                 $tmp_output_scale = '';
             }

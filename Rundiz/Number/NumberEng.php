@@ -91,10 +91,10 @@ class NumberEng
 
         $output = '';
 
-        if ($num{0} == '-') {
+        if ($num[0] == '-') {
             $output = 'negative ';
             $num = ltrim($num, '-');
-        } else if ($num{0} == '+') {
+        } else if ($num[0] == '+') {
             $output = 'positive ';
             $num = ltrim($num, '+');
         }
@@ -112,12 +112,12 @@ class NumberEng
 
             $groups2 = array();
             foreach ($groups as $g) {
-                $groups2[] = $this->convertThreeDigit($g{0}, $g{1}, $g{2});
+                $groups2[] = $this->convertThreeDigit($g[0], $g[1], $g[2]);
             }// endforeach;
 
             for ($z = 0; $z < count($groups2); $z++) {
                 if ($groups2[$z] != '') {
-                    $output .= $groups2[$z] . $this->convertGroup(11 - $z) . ($z < 11 && !array_search('', array_slice($groups2, $z + 1, -1)) && $groups2[11] != '' && $groups[11]{0} == '0' ? ' and ' : ', ');
+                    $output .= $groups2[$z] . $this->convertGroup(11 - $z) . ($z < 11 && !array_search('', array_slice($groups2, $z + 1, -1)) && $groups2[11] != '' && $groups[11][0] == '0' ? ' and ' : ', ');
                 }
             }// endfor;
 
@@ -127,7 +127,7 @@ class NumberEng
         if ($dec > 0) {
             $output .= ' point';
             for ($i = 0; $i < strlen($dec); $i++) {
-                $output .= ' ' . $this->convertDigit($dec{$i});
+                $output .= ' ' . $this->convertDigit($dec[$i]);
             }// endfor;
         }// endif;
 
