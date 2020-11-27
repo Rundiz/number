@@ -3,7 +3,7 @@
  * Number class.
  *
  * @package Number
- * @version 1.1.6
+ * @version 1.1.7
  * @author Vee W.
  * @license http://opensource.org/licenses/MIT
  *
