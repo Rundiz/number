@@ -3,7 +3,7 @@
  * Number class.
  *
  * @package Number
- * @version 1.1.7
+ * @version 1.1.8
  * @author Vee W.
  * @license http://opensource.org/licenses/MIT
  *
@@ -36,14 +36,14 @@ class Number
         'GB' => 1000000000,
         'TiB' => 1099511627776,
         'TB' => 1000000000000,
-        'PiB' => 1125899906842624,
-        'PB' => 1000000000000000,
-        'EiB' => 1152921504606846976,
-        'EB' => 1000000000000000000,
-        'ZiB' => 1180591620717411303424,
-        'ZB' => 1000000000000000000000,
-        'YiB' => 1208925819614629174706176,
-        'YB' => 1000000000000000000000000,
+        'PiB' => '1125899906842624',// use string to prevent division by zero because int number is larger than PHP_INT_MAX.
+        'PB' => '1000000000000000',
+        'EiB' => '1152921504606846976',
+        'EB' => '1000000000000000000',
+        'ZiB' => '1180591620717411303424',
+        'ZB' => '1000000000000000000000',
+        'YiB' => '1208925819614629174706176',
+        'YB' => '1000000000000000000000000',
     );
 
 
@@ -104,17 +104,18 @@ class Number
     /**
      * convert file size from bytes to the unit you specified or automatically detect.
      *
-     * @param integer $size file size in bytes only.
+     * @param int|float|string $size file size in bytes only.
      * @param string $unit unit you want to convert. accepted values are AUTO, B, KB, KiB, ... more please refer to byte_units property.
      * @param integer $decimal number of decimal.
-     * @return mixed return converted file size as string if success, return false if failed to convert.
+     * @return mixed return converted file size as string if success, return `false` if failed to convert.
      */
     public function fromBytes($size, $unit = 'AUTO', $decimal = 2)
     {
         if (!is_numeric($size)) {
             return false;
         }
-        $size = (string) $size;
+
+        $size = sprintf('%f', floatval($size));
 
         if ($unit == null) {
             $unit = 'AUTO';
