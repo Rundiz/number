@@ -8,7 +8,7 @@ In Thai language it is including number to Thai Baht conversion.
 [![License](https://poser.pugx.org/rundiz/number/license)](https://packagist.org/packages/rundiz/number)
 [![Total Downloads](https://poser.pugx.org/rundiz/number/downloads)](https://packagist.org/packages/rundiz/number)
 
-Tested up to PHP 8.4
+Tested up to PHP 8.5
 
 ## Example:
 
